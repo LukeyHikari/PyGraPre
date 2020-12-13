@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-import openpyxl as opyxl 
+import sycreator
+import studadd 
 from tkinter import *
 
 root = Tk()
