@@ -43,7 +43,9 @@ if file_exists:
         else:
             i = i - 1
         i = i + 1
-        wb.save(filename = filedestination)
+    maxcell = sheet.cell(row = noStuds+2, column = 1)
+    maxcell.value = "Highest Possible Grade"
+    wb.save(filename = filedestination)
     
 else:
     print("School Year does not Exist")

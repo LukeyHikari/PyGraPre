@@ -1,14 +1,14 @@
 import os.path as op
 import os
-import pandas
+import pandas as pd
 import csv
 
 directory = os.getcwd()
 directory = directory + r'\\Sheets\\'
 filetype = r".csv"
 
-school_year = input(r'School year:')
-section = input(r'Section:')
+school_year = '2020-2021' #input(r'School year:')
+section = 'Aguinaldo' #input(r'Section:')
 
 file_exists = op.exists(directory)
 
@@ -19,17 +19,10 @@ else:
 
 sydirectory = directory + school_year + r'\\' + section + r'\\'
 
-
-with open(sydirectory + 'Number of Students and Activities.csv', 'rt') as f:
-    data = csv.DictReader(f)
-    for row in data:
-        noStuds = row['No. of Students']
-        print (noStuds)
-
-print(noStuds)
-#df = pandas.read_csv(sydirectory + 'Number of Students and Activities.csv')
-#value = df['No. of Students']
-#if value < 3:
-    #print (df['No. of Students'])
+fields = ['Written Task Status']
+test = pd.read_csv(sydirectory + 'log.csv')
+test.loc[0, "Written Task Status"] = True
+print(test)
+test.to_csv(sydirectory + 'log.csv', index = False)
 
 
