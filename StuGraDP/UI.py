@@ -4,105 +4,142 @@ import tkinter.font as tkFont
 class App:
     def __init__(self, root):
         #setting title
-        root.title("")
+        root.title("resertui.py")
         #setting window size
-        width=600
-        height=330
+        width=750
+        height=381
         screenwidth = root.winfo_screenwidth()
         screenheight = root.winfo_screenheight()
         alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        GButton_759=tk.Button(root)
-        GButton_759["activebackground"] = "#626262"
-        GButton_759["bg"] = "#999999"
+        GButton_755=tk.Button(root)
+        GButton_755["bg"] = "#a3a3a3"
         ft = tkFont.Font(family='Times',size=10)
-        GButton_759["font"] = ft
-        GButton_759["fg"] = "#ffffff"
-        GButton_759["justify"] = "center"
-        GButton_759["text"] = "Select Sheet"
-        GButton_759.place(x=10,y=10,width=155,height=30)
-        GButton_759["command"] = self.GButton_759_command
+        GButton_755["font"] = ft
+        GButton_755["fg"] = "#f4f4f4"
+        GButton_755["justify"] = "center"
+        GButton_755["text"] = "Button1"
+        GButton_755.place(x=20,y=210,width=186,height=30)
+        GButton_755["command"] = self.GButton_755_command
 
-        GMessage_79=tk.Message(root)
+        GButton_751=tk.Button(root)
+        GButton_751["bg"] = "#a3a3a3"
         ft = tkFont.Font(family='Times',size=10)
-        GMessage_79["font"] = ft
-        GMessage_79["fg"] = "#333333"
-        GMessage_79["justify"] = "center"
-        GMessage_79["text"] = "DISPLAY CURRENTLY SELCTED SHEET HERE"
-        GMessage_79.place(x=200,y=10,width=383,height=30)
+        GButton_751["font"] = ft
+        GButton_751["fg"] = "#ffffff"
+        GButton_751["justify"] = "center"
+        GButton_751["text"] = "Button2"
+        GButton_751.place(x=20,y=250,width=186,height=30)
+        GButton_751["command"] = self.GButton_751_command
 
-        GLabel_600=tk.Label(root)
+        GButton_599=tk.Button(root)
+        GButton_599["bg"] = "#a3a3a3"
         ft = tkFont.Font(family='Times',size=10)
-        GLabel_600["font"] = ft
-        GLabel_600["fg"] = "#333333"
-        GLabel_600["justify"] = "center"
-        GLabel_600["text"] = "current student no."
-        GLabel_600["relief"] = "flat"
-        GLabel_600.place(x=20,y=60,width=145,height=30)
+        GButton_599["font"] = ft
+        GButton_599["fg"] = "#ffffff"
+        GButton_599["justify"] = "center"
+        GButton_599["text"] = "Button3"
+        GButton_599.place(x=20,y=290,width=185,height=30)
+        GButton_599["command"] = self.GButton_599_command
 
-        GButton_518=tk.Button(root)
-        GButton_518["bg"] = "#858585"
+        GButton_572=tk.Button(root)
+        GButton_572["bg"] = "#878787"
         ft = tkFont.Font(family='Times',size=10)
-        GButton_518["font"] = ft
-        GButton_518["fg"] = "#ffffff"
-        GButton_518["justify"] = "center"
-        GButton_518["text"] = "Add Performance task"
-        GButton_518.place(x=20,y=190,width=144,height=30)
-        GButton_518["command"] = self.GButton_518_command
+        GButton_572["font"] = ft
+        GButton_572["fg"] = "#ffffff"
+        GButton_572["justify"] = "center"
+        GButton_572["text"] = "Button4"
+        GButton_572.place(x=220,y=210,width=189,height=30)
+        GButton_572["command"] = self.GButton_572_command
 
-        GButton_291=tk.Button(root)
-        GButton_291["bg"] = "#999999"
+        GButton_246=tk.Button(root)
+        GButton_246["bg"] = "#a3a3a3"
         ft = tkFont.Font(family='Times',size=10)
-        GButton_291["font"] = ft
-        GButton_291["fg"] = "#fefefe"
-        GButton_291["justify"] = "center"
-        GButton_291["text"] = "Add Written Task"
-        GButton_291.place(x=20,y=230,width=143,height=30)
-        GButton_291["command"] = self.GButton_291_command
+        GButton_246["font"] = ft
+        GButton_246["fg"] = "#ffffff"
+        GButton_246["justify"] = "center"
+        GButton_246["text"] = "Button5"
+        GButton_246.place(x=220,y=250,width=190,height=30)
+        GButton_246["command"] = self.GButton_246_command
 
-        GButton_571=tk.Button(root)
-        GButton_571["bg"] = "#999999"
+        GButton_697=tk.Button(root)
+        GButton_697["bg"] = "#a3a3a3"
         ft = tkFont.Font(family='Times',size=10)
-        GButton_571["font"] = ft
-        GButton_571["fg"] = "#fefefe"
-        GButton_571["justify"] = "center"
-        GButton_571["text"] = "Add Summative Task"
-        GButton_571.place(x=20,y=270,width=142,height=30)
-        GButton_571["command"] = self.GButton_571_command
+        GButton_697["font"] = ft
+        GButton_697["fg"] = "#ffffff"
+        GButton_697["justify"] = "center"
+        GButton_697["text"] = "Button6"
+        GButton_697.place(x=220,y=290,width=190,height=30)
+        GButton_697["command"] = self.GButton_697_command
 
-        GMessage_628=tk.Message(root)
-        GMessage_628["bg"] = "#1e9fff"
+        GButton_677=tk.Button(root)
+        GButton_677["bg"] = "#a3a3a3"
+        ft = tkFont.Font(family='Times',size=10)
+        GButton_677["font"] = ft
+        GButton_677["fg"] = "#ffffff"
+        GButton_677["justify"] = "center"
+        GButton_677["text"] = "Button7"
+        GButton_677.place(x=120,y=330,width=189,height=30)
+        GButton_677["command"] = self.GButton_677_command
+
+        GMessage_302=tk.Message(root)
+        GMessage_302["bg"] = "#8f8f8f"
         ft = tkFont.Font(family='Times',size=20)
-        GMessage_628["font"] = ft
-        GMessage_628["fg"] = "#333333"
-        GMessage_628["justify"] = "center"
-        GMessage_628["text"] = "future features here"
-        GMessage_628.place(x=170,y=190,width=414,height=110)
+        GMessage_302["font"] = ft
+        GMessage_302["fg"] = "#ffffff"
+        GMessage_302["justify"] = "center"
+        GMessage_302["text"] = "INPUT AREA"
+        GMessage_302.place(x=420,y=210,width=315,height=109)
 
-        GLineEdit_774=tk.Entry(root)
-        GLineEdit_774["borderwidth"] = "1px"
+        GButton_822=tk.Button(root)
+        GButton_822["bg"] = "#a0a0a0"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_774["font"] = ft
-        GLineEdit_774["fg"] = "#333333"
-        GLineEdit_774["justify"] = "center"
-        GLineEdit_774["text"] = "Student !"
-        GLineEdit_774.place(x=0,y=90,width=166,height=61)
+        GButton_822["font"] = ft
+        GButton_822["fg"] = "#ffffff"
+        GButton_822["justify"] = "center"
+        GButton_822["text"] = "Button1"
+        GButton_822.place(x=610,y=330,width=124,height=30)
+        GButton_822["command"] = self.GButton_822_command
 
-    def GButton_759_command(self):
+        GMessage_746=tk.Message(root)
+        ft = tkFont.Font(family='Times',size=10)
+        GMessage_746["font"] = ft
+        GMessage_746["fg"] = "#333333"
+        GMessage_746["justify"] = "center"
+        GMessage_746["text"] = "Message"
+        GMessage_746.place(x=20,y=60,width=707,height=129)
+
+    def GButton_755_command(self):
         print("command")
 
 
-    def GButton_518_command(self):
+    def GButton_751_command(self):
         print("command")
 
 
-    def GButton_291_command(self):
+    def GButton_599_command(self):
         print("command")
 
 
-    def GButton_571_command(self):
+    def GButton_572_command(self):
+        print("command")
+
+
+    def GButton_246_command(self):
+        print("command")
+
+
+    def GButton_697_command(self):
+        print("command")
+
+
+    def GButton_677_command(self):
+        print("command")
+
+
+    def GButton_822_command(self):
         print("command")
 
 if __name__ == "__main__":
