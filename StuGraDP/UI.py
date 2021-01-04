@@ -16,6 +16,59 @@ class App:
         root.resizable(width=False, height=False)
         root.configure(bg = '#383737')
 
+        quarters = ["Quarter 1","Quarter 2","Quarter 3","Quarter 4"]
+        quarter = tk.StringVar(root)
+        quarter.set(quarters[0])
+        dpdqt = tk.OptionMenu(root, quarter, *quarters)
+        dpdqt.config(text="Quarter",width=10, font=("Helvetica",10),bg='#706a69',fg='white')
+        dpdqt.place(x=20,y=15)
+        dpdqt.pack
+        def qtselect(*args):
+            global dpqt
+            dpqt = str(quarter.get())
+            print(dpqt)
+            return(dpqt)
+        quarter.trace("w", qtselect)
+
+        dpdsections = ["Aguinaldo"]
+        dropsects = tk.StringVar(root)
+        dropsects.set(dpdsections[0])
+        dpdst = tk.OptionMenu(root, dropsects, *dpdsections)
+        dpdst.config(text="Quarter",width=10, font=("Helvetica",10),bg='#706a69',fg='white')
+        dpdst.place(x=140,y=15)
+        dpdst.pack
+        def stselect(*args):
+            global dpst
+            dpst = str(dropsects.get())
+            print(dpst)
+            return (dpst)
+        dropsects.trace("w", stselect)
+
+        dpdschooly = ["2020-2021"]
+        dropschooly = tk.StringVar(root)
+        dropschooly.set(dpdschooly[0])
+        dpdsy = tk.OptionMenu(root, dropschooly, *dpdschooly)
+        dpdsy.config(text="Quarter",width=10, font=("Helvetica",10),bg='#706a69',fg='white')
+        dpdsy.place(x=260,y=15)
+        dpdsy.pack
+        def syselect(*args):
+            global dpsy
+            dpsy = str(dropschooly.get())
+            print(dpsy)
+            return dpsy
+        dropschooly.trace("w", syselect)
+        
+        qtsecsydirectory= tk.Message(root)
+        ft = tkFont.Font(family='Times', size=14)
+        qtsecsydirectory["width"] = "10000"
+        qtsecsydirectory["font"] = ft
+        qtsecsydirectory["bg"] = "#8a8a8a"
+        qtsecsydirectory["fg"] = "#f4f4f4"
+        qtsecsydirectory["justify"] = "left"
+        qtsecsydirectory["text"] = "Directory:" + " " + str(syselect()) + " " + str(stselect()) + " " + str(qtselect()) 
+        qtsecsydirectory.place(x=380,y=15,width=350,height=32)
+        qtsecsydirectory.pack
+
         GButton_755=tk.Button(root)
         GButton_755["bg"] = "#706a69"
         ft = tkFont.Font(family='Times',size=10)
@@ -110,7 +163,7 @@ class App:
         GMessage_746["width"] = "10000"
         GMessage_746["font"] = ft
         GMessage_746["bg"] = "#8a8a8a"
-        GMessage_746["fg"] = "#333333"
+        GMessage_746["fg"] = "#f4f4f4"
         GMessage_746["justify"] = "left"
         GMessage_746["text"] = "Display Box"
         GMessage_746.place(x=20,y=60,width=707,height=129)
