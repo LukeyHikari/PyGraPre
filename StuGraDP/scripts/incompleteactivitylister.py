@@ -17,7 +17,7 @@ def listincacts(atype, sy, sec, qt):
     if file_exists:
         print("This directory already exists")
     else:
-        os.makedirs(directory + school_year + r'\\' + section)
+        print("This directory does not exists")
 
     sydirectory = directory + school_year + r'\\' + section + r'\\'
 
