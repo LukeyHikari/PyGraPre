@@ -113,9 +113,13 @@ class App:
         exportbut.place(x=610,y=330,width=124,height=30)
 
         #Input Area Box
-        inputareabox = tk.Button(root, bg = "#8a8a8a", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff", justify = "center", text = "Input Area")
-        inputareabox.place(x=420,y=210,width=315,height=109)
-
+        inputareabox = tk.Button(root, bg = "#8a8a8a", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff", justify = "center", text = "Input Code")
+        inputareabox.place(x=420,y=280,width=315,height=39)
+        
+        #Type Box
+        displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20), fg = "#f4f4f4", justify = "left", text = "Type Box")
+        displaybox.place(x=420,y=210,width=315,height=49)
+       
         #Diplay Box
         displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20), fg = "#f4f4f4", justify = "left", text = "Display Box")
         displaybox.place(x=20,y=60,width=707,height=129)
