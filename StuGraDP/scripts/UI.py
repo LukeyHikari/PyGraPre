@@ -98,7 +98,9 @@ class App:
         def createsysubcmd(self):
             tracertext = str(inputareabox.get())
             inputareabox.delete(0,'end')
-            sycreator.sycreate("True", str(syselect()), str(stselect()), int(tracertext))
+            inputareabox.unbind('<Return>')
+            ttodisplay = sycreator.sycreate("True", str(syselect()), str(stselect()), tracertext)
+            displaytext.set(ttodisplay)
 
         def createsycmd(*args): #Create S.Y.
             print("Creating School Year")
@@ -109,15 +111,15 @@ class App:
             print("Adding Students")
 
 
-        def recordmisactcmd(*args): #Record Missing Act.
-            print("Recording Missing Activities")
+        def listincactscmd(*args): #Record Missing Act.
+            print("Finding Incomplete Activities")
 
 
         def findstudmisactcmd(*args): #Find Student's Missing Act
             print("Finding Student Missing Activities")
 
         def exportcmd(*args): #Experimental export command
-            print("Exporting Sheet")
+            print("Exporting")
             exgrades.exportgrades(dpsy, dpst, dpqt)
            
 
@@ -146,14 +148,14 @@ class App:
         justify = "center", text = "Find Student's Missing Act.", command = findstudmisactcmd)
         fstudsmisactbut.place(x=20,y=290,width=185,height=30)
 
-        #Record Missing Acts. Button
+        #Find Students with Missing Acts. Button
         recmisactbut = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
-        justify = "center", text = "Record Missing Act.", command = recordmisactcmd)
+        justify = "center", text = "Find Students w/ Missing Acts.", command = findstudwmisactcmd)
         recmisactbut.place(x=220,y=290,width=190,height=30)
 
-        #Find Students with Missing Acts. Button
+        #List Incomplete Activities Button
         findstudwithmisact = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
-        justify = "center", text = "Find Students with Missing Act.", command = findstudwmisactcmd)
+        justify = "center", text = "List Incomplete Activities", command = listincactscmd)
         findstudwithmisact.place(x=120,y=330,width=189,height=30)
 
         #Export Button
@@ -162,8 +164,8 @@ class App:
         exportbut.place(x=610,y=330,width=124,height=30)
 
         #Diplay Box
-        displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20), fg = "#f4f4f4",
-        justify = "left", textvariable = displaytext)
+        displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20),
+        fg = "#f4f4f4", justify = "left", textvariable = displaytext)
         displaybox.place(x=20,y=60,width=707,height=129)
 
 

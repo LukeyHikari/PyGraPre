@@ -10,7 +10,7 @@ import csvcreator as csvc
 
 def sycreate(crsy, sy, sec, numstud):
     creating = crsy #input(r'New school year:')
-
+    rvalue = ""
     def centeractnumbers(quarter):
         wb = load_workbook(filedestination)
         ws = wb[quarter]
@@ -108,26 +108,39 @@ def sycreate(crsy, sy, sec, numstud):
         wb.save(filename = filedestination)
 
     if creating == "True":
-        directory = os.getcwd()
-        directory = directory + r'\\Sheets\\'
-        filetype = r".xlsx"
-
         school_year = sy #input(r'School year:')
         section = sec #input(r'Section:')
-        noofstudents = numstud #int(input(r'No. Of Students:'))
+        noofstudents = int(numstud) #int(input(r'No. Of Students:'))
+        directory = os.getcwd()
+        sheetdir = directory + r'\\Sheets\\'
+        sheetdirexist = op.exists(sheetdir)
+        if sheetdirexist:
+            print("Sheets directory exist")
+        else:
+            os.makedirs(directory + r'\\Sheets\\')
+        directory = directory + r'\\Sheets\\' + school_year
+        filetype = r".xlsx"
         file_exists = op.exists(directory)
 
         if file_exists:
             print("SY directory already exists")
-            file_exists = op.exists(directory + school_year + r'\\' + section)
+            file_exists = op.exists(directory + r'\\' + section)
             if file_exists:
                 print("Section Exists")
             else:
-                os.makedirs(directory + school_year + r'\\' + section)     
+                print("Making Section in Already Existing School Year")
+                os.makedirs(directory + r'\\' + section)     
         else:
-            os.makedirs(directory + school_year + r'\\')
+            print("Making School Year Directory")
+            os.makedirs(directory + r'\\')
+            file_exists = op.exists(directory + r'\\' + section)
+            if file_exists:
+                print("Section Exists")
+            else:
+                print("Making Section in New School Year")
+                os.makedirs(directory + r'\\' + section)
 
-        sydirectory = directory + school_year + r'\\' + section + r'\\'
+        sydirectory = directory + r'\\' + section + r'\\'
 
         filedestination = sydirectory + section + filetype
 
@@ -135,12 +148,14 @@ def sycreate(crsy, sy, sec, numstud):
 
         if file_exists:
             print("This school year already exists")
+            rvalue = "This class already exists"
         else:
             wb = Workbook()
             wb.save(filedestination)
             wb = load_workbook(filedestination)
-            if section in wb.sheetnames:
-                print("This section exists")
+            if "Quarter 1" in wb.sheetnames:
+                print("Quarter Sheets Already Exists")
+                rvalue = "Class Sheets are already made"
             else:
                 wb.create_sheet("Quarter 1")
                 wb.create_sheet("Quarter 2")
@@ -153,7 +168,10 @@ def sycreate(crsy, sy, sec, numstud):
             fillsheetq2()
             fillsheetq3()
             fillsheetq4()
+            rvalue = "Class Created w/ " + numstud + " Students"
     
     else:
         pass
+
+    return(rvalue)
 

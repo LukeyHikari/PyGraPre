@@ -3,22 +3,22 @@ import os.path as op
 import os
 
 def qcsvcreate(sy, sec, numstud):
-    directory = os.getcwd()
-    directory = directory + r'\\Sheets\\'
-
     school_year = sy #input(r'School year:')
     section = sec #input(r'Section:')
     noofstudents = numstud #input(r'No. Of Students:')
     noofstudents = int(noofstudents)
+    directory = os.getcwd()
+    directory = directory + r'\\Sheets\\' + school_year + r'\\' + section
 
     file_exists = op.exists(directory)
 
     if file_exists:
         print("This directory already exists")
+        print("Proceeding to CSVs")
     else:
-        os.makedirs(directory + school_year + r'\\' + section)
+        os.makedirs(directory)
 
-    sydirectory = directory + school_year + r'\\' + section + r'\\'
+    sydirectory = directory + r'\\'
 
     with open(sydirectory + "Q1.csv", 'w', newline='') as file:
         fieldnames = ['Performance Task Status', 'Written Task Status']
