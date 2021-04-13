@@ -5,6 +5,7 @@ from tkinter import StringVar
 from time import sleep
 import exportgrade as exgrades
 import sycreator
+import incompleteactivitylister as iactlister
 
 class App:
     def __init__(self, root):
@@ -101,6 +102,7 @@ class App:
             inputareabox.unbind('<Return>')
             ttodisplay = sycreator.sycreate("True", str(syselect()), str(stselect()), tracertext)
             displaytext.set(ttodisplay)
+            ttodisplay = ""
 
         def createsycmd(*args): #Create S.Y.
             print("Creating School Year")
@@ -110,9 +112,17 @@ class App:
         def addstudscmd(*args): #Add Studs
             print("Adding Students")
 
+        def listincactssubcmd(*args):
+            inputtedtype = str(inputareabox.get())
+            inputareabox.delete(0,'end')
+            inputareabox.unbind('<Return>')
+            ttodisplay = iactlister.listincacts(inputtedtype, str(syselect()), str(stselect()), str(qtselect()))
+            displaytext.set("Incomplete Activities are Act No.:" + "\n" + str(ttodisplay))
 
         def listincactscmd(*args): #Record Missing Act.
             print("Finding Incomplete Activities")
+            displaytext.set("Performance or Written?")
+            inputareabox.bind('<Return>', listincactssubcmd)
 
 
         def findstudmisactcmd(*args): #Find Student's Missing Act

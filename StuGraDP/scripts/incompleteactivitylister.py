@@ -6,28 +6,27 @@ import csv
 def listincacts(atype, sy, sec, qt):
     directory = os.getcwd()
     directory = directory + r'\\Sheets\\'
-
     typeofactivity = atype #input(r'Type Of Activity:')
     school_year = sy #input(r'School year:')
     section = sec #input(r'Section:')
     quarter = qt #input(r'Quarter:')
-
+    csvquartername = ""
     file_exists = op.exists(directory)
-
+    incacts = []
     if file_exists:
-        print("This directory already exists")
+        print("Section Exists. Proceeding to Checking")
     else:
-        os.makedirs(directory + school_year + r'\\' + section)
+        print("Section does not exist.")
 
     sydirectory = directory + school_year + r'\\' + section + r'\\'
 
-    if quarter == '1':
+    if quarter == 'Quarter 1':
         csvquartername = "Q1"
-    elif quarter == '2':
+    elif quarter == 'Quarter 2':
         csvquartername = "Q2"
-    elif quarter == '3':
+    elif quarter == 'Quarter 3':
         csvquartername = "Q3"
-    elif quarter == '4':
+    elif quarter == 'Quarter 4':
         csvquartername = "Q4"
     quartercsv = sydirectory + csvquartername + r'.csv'
 
@@ -43,9 +42,10 @@ def listincacts(atype, sy, sec, qt):
             df = pd.read_csv(quartercsv)
             value =  df.loc[i, "Performance Task Status"]
             if value == False:
-                print(i,"Incomplete")
+                print(i+1,"Incomplete")
+                incacts.append(i+1)
             else:
-                print(i,"Complete")
+                print(i+1,"Complete")
 
     elif typeofactivity == 'Written':
         with open(sydirectory + 'Number of Students and Activities.csv', 'rt') as f:
@@ -58,6 +58,9 @@ def listincacts(atype, sy, sec, qt):
             df = pd.read_csv(quartercsv)
             value =  df.loc[i, "Written Task Status"]
             if value == False:
-                print(i,"Incomplete")
+                print(i+1,"Incomplete")
+                incacts.append(i+1)
             else:
-                print(i,"Complete")
+                print(i+1,"Complete")
+
+    return(incacts)
