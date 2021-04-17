@@ -5,10 +5,19 @@ from openpyxl import load_workbook
 import os.path as op 
 import os
 import csv
+from tkinter import *
+from tkinter.ttk import *
+import UI
+from UI import App
+from tkinter import ttk
+from tkinter import StringVar
+from tkinter import Entry
 
 def addstuds(sy, sec):
     school_year = sy #input(r'School Year:')
     section = sec #input(r'Section:')
+    app = App()
+    ib = app.get_inputbox()
 
     directory = os.getcwd()
     directory = directory + r'\\Sheets\\'
@@ -27,14 +36,24 @@ def addstuds(sy, sec):
 
     wb = Workbook()
 
+    def testprint():
+        sname = ib.get()
+        ib.delete(0,'end')
+        ib.unbind('<Return>')
+        return sname
+    def testconf():
+        ib.unbind()
+        return ''
+
     if file_exists:
         print("Adding Students")
         i = 1
         noStuds = noStuds + 1
-        while i < noStuds:   
-            studentname = input(r'Student Full Name:')
-            print(studentname)
-            confirmation = input(r'Press ENTER if the student name is right')
+        while i < noStuds:
+            #this is causing errors
+            #try using a variable.trace("w", continue) function later on
+            studentname = ib.bind('<Return>', testprint)#input(r'Student Full Name:')
+            confirmation = ib.bind('<Return>', testconf)#input(r'Press ENTER if the student name is right')
             if confirmation == '':
                 wb = load_workbook(filedestination)
                 sheet = wb[r'Quarter 1']

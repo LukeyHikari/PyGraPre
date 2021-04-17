@@ -2,29 +2,22 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 from tkinter import StringVar
-from time import sleep
+from tkinter import Entry
 import exportgrade as exgrades
 import sycreator
 import incompleteactivitylister as iactlister
+import studadd as sadd
+
+root = None
 
 class App:
-    def __init__(self, root):
-        #setting title
-        root.title("PyGraPre")
-        #setting window size
-        width=750
-        height=381
-        screenwidth = root.winfo_screenwidth()
-        screenheight = root.winfo_screenheight()
-        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
-        root.geometry(alignstr)
-        root.resizable(width=False, height=False)
-        root.configure(bg = '#383737')
-
+    def __init__(self):
+# Variables
         directorydisplaytext = StringVar()
         tracertext = ""
         displaytext = StringVar()
 
+#       #Dropdowns
         quarters = ["Quarter 1","Quarter 2","Quarter 3","Quarter 4"]
         dropquarter = tk.StringVar(root)
         dropquarter.set(quarters[0])
@@ -33,7 +26,7 @@ class App:
         dpdqt.place(x=20,y=15)
         dpdqt.pack
 
-        dpdsections = ["Aguinaldo", "Agoncillo"]
+        dpdsections = ["Agoncillo", "Aguinaldo"]
         dropsects = tk.StringVar(root)
         dropsects.set(dpdsections[0])
         dpdst = tk.OptionMenu(root, dropsects, *dpdsections)
@@ -49,11 +42,11 @@ class App:
         dpdsy.place(x=260,y=15)
         dpdsy.pack
 
-        #Input Area Box
-        inputareabox = tk.Entry(root, bg = "#808585", font= tkFont.Font(family = 'Times', size = 15), fg = "#ffffff", justify = "center")
-        inputareabox.place(x=420,y=210,width=315,height=109)
+#       #Input Area Box
+        self.inputareabox = tk.Entry(root, bg = "#808585", font= tkFont.Font(family = 'Times', size = 15), fg = "#ffffff", justify = "center")
+        self.inputareabox.place(x=420,y=210,width=315,height=109)
 
-        #dropdown functions
+#        #dropdown functions
         def qtselect(*args):
             global dpqt
             dpqt = str(dropquarter.get())
@@ -85,103 +78,125 @@ class App:
         
         directorydisplaytext.set("Directory:" + " " + str(syselect()) + " " + str(stselect()) + " " + str(qtselect()))
 
-        def addptcmd(*args): #Add PT
+# UI Functions
+#        #Add PT
+        def addptcmd(*args):
             print("Adding Performance Task")
 
-
-        def addwtcmd(*args): #Add WT
+#        #Add WT
+        def addwtcmd(*args):
             print("Adding Written Task")
 
-
-        def findstudwmisactcmd(*args): #Find Stud Mis Act
+#       #Find w/ Stud Mis Act
+        def findstudwmisactcmd(*args): 
             print("Finding Student With Missing Activities")
 
-        def createsysubcmd(self):
-            tracertext = str(inputareabox.get())
-            inputareabox.delete(0,'end')
-            inputareabox.unbind('<Return>')
+#       #Create S.Y.
+        def createsysubcmd(*args):
+            tracertext = str(self.inputareabox.get())
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
             ttodisplay = sycreator.sycreate("True", str(syselect()), str(stselect()), tracertext)
             displaytext.set(ttodisplay)
             ttodisplay = ""
 
-        def createsycmd(*args): #Create S.Y.
+        def createsycmd(*args): 
             print("Creating School Year")
             displaytext.set("Number of Students in" + " " + str(stselect() + "?:"))
-            inputareabox.bind('<Return>', createsysubcmd)              
+            self.inputareabox.bind('<Return>', createsysubcmd)              
 
-        def addstudscmd(*args): #Add Studs
-            print("Adding Students")
+#       #Add Studs
+        def addstudscmd(*args): 
+            sadd.addstuds(str(syselect()), str(stselect()))
 
+#       #List Incomplete Acts.
         def listincactssubcmd(*args):
-            inputtedtype = str(inputareabox.get())
-            inputareabox.delete(0,'end')
-            inputareabox.unbind('<Return>')
+            inputtedtype = str(self.inputareabox.get())
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
             ttodisplay = iactlister.listincacts(inputtedtype, str(syselect()), str(stselect()), str(qtselect()))
             displaytext.set("Incomplete Activities are Act No.:" + "\n" + str(ttodisplay))
 
-        def listincactscmd(*args): #Record Missing Act.
+        def listincactscmd(*args): 
             print("Finding Incomplete Activities")
             displaytext.set("Performance or Written?")
-            inputareabox.bind('<Return>', listincactssubcmd)
+            self.inputareabox.bind('<Return>', listincactssubcmd)
 
-
-        def findstudmisactcmd(*args): #Find Student's Missing Act
+#       #Find Student's Missing Act
+        def findstudmisactcmd(*args): 
             print("Finding Student Missing Activities")
 
-        def exportcmd(*args): #Experimental export command
+#       #Experimental export command
+        def exportcmd(*args): 
             print("Exporting")
             exgrades.exportgrades(dpsy, dpst, dpqt)
-           
 
-        #Add Performance Task Button
+# Main UI code
+#        #Add Performance Task Button
         addperftask = tk.Button(root, bg = "#706a69", font= tkFont.Font(family = 'Times', size = 10), fg = "#f4f4f4",
         justify = "center", text = "Add Performance Task", command = addptcmd)
         addperftask.place(x=20,y=210,width=186,height=30)
         
-        #Add Written Task Button
+#       #Add Written Task Button
         addwrittask = tk.Button(root, bg = "#706a69", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Add Written Task", command = addwtcmd)
         addwrittask.place(x=20,y=250,width=186,height=30)
 
-        #Create School Year Button
+#        #Create School Year Button
         createsybut = tk.Button(root, bg = "#706a69", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Create School Year", command = createsycmd)
         createsybut.place(x=220,y=210,width=189,height=30)
 
-        #Add Students Button
+#        #Add Students Button
         addstudbut = tk.Button(root, bg = "#706a69", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Add Students", command = addstudscmd)
         addstudbut.place(x=220,y=250,width=190,height=30)
 
-        #Find Student's Missing Acts. Button
+#        #Find Student's Missing Acts. Button
         fstudsmisactbut = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Find Student's Missing Act.", command = findstudmisactcmd)
         fstudsmisactbut.place(x=20,y=290,width=185,height=30)
 
-        #Find Students with Missing Acts. Button
+#        #Find Students with Missing Acts. Button
         recmisactbut = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Find Students w/ Missing Acts.", command = findstudwmisactcmd)
         recmisactbut.place(x=220,y=290,width=190,height=30)
 
-        #List Incomplete Activities Button
+#        #List Incomplete Activities Button
         findstudwithmisact = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "List Incomplete Activities", command = listincactscmd)
         findstudwithmisact.place(x=120,y=330,width=189,height=30)
 
-        #Export Button
+#        #Export Button
         exportbut = tk.Button(root, bg = "#383737", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Export", command = exportcmd)
         exportbut.place(x=610,y=330,width=124,height=30)
 
-        #Diplay Box
+#        #Diplay Box
         displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20),
         fg = "#f4f4f4", justify = "left", textvariable = displaytext)
         displaybox.place(x=20,y=60,width=707,height=129)
+#    
+    def get_inputbox(self):
+        return self.inputareabox
 
-
-   
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
-    app = App(root)
+# Window Properties
+    root.title("PyGraPre")
+    #setting window size
+    width=750
+    height=381
+    screenwidth = root.winfo_screenwidth()
+    screenheight = root.winfo_screenheight()
+    alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+    root.geometry(alignstr)
+    root.resizable(width=False, height=False)
+    root.configure(bg = '#383737')
+#    
+    app = App()
     root.mainloop()
+
+if __name__ == "__main__":
+    main()
     
