@@ -7,7 +7,8 @@ import exportgrade as exgrades
 import sycreator
 import incompleteactivitylister as iactlister
 import studadd as sadd
-
+import performancetaskkadder as ptadder
+import time
 root = None
 
 class App:
@@ -15,7 +16,7 @@ class App:
 # Variables
         directorydisplaytext = StringVar()
         tracertext = ""
-        displaytext = StringVar()
+        self.displaytext = StringVar()
 
 #       #Dropdowns
         quarters = ["Quarter 1","Quarter 2","Quarter 3","Quarter 4"]
@@ -45,6 +46,11 @@ class App:
 #       #Input Area Box
         self.inputareabox = tk.Entry(root, bg = "#808585", font= tkFont.Font(family = 'Times', size = 15), fg = "#ffffff", justify = "center")
         self.inputareabox.place(x=420,y=210,width=315,height=109)
+
+#        #Diplay Box
+        displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20),
+        fg = "#f4f4f4", justify = "left", textvariable = self.displaytext)
+        displaybox.place(x=20,y=60,width=707,height=129)
 
 #        #dropdown functions
         def qtselect(*args):
@@ -80,8 +86,20 @@ class App:
 
 # UI Functions
 #        #Add PT
+
+        def addptinitialcmd(*args):
+            ttodisplay = "Recording Grades for Activity No. " + self.inputareabox.get()  
+            self.displaytext.set(ttodisplay)
+            anumber = int(self.inputareabox.get())
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            ptadder.ptaskadd(str(syselect()), str(stselect()), anumber, str(qtselect()))
+
+
         def addptcmd(*args):
             print("Adding Performance Task")
+            self.displaytext.set("Please Input Activity Number(Ex: 1, 2, etc.)")
+            self.inputareabox.bind('<Return>', addptinitialcmd)
 
 #        #Add WT
         def addwtcmd(*args):
@@ -97,12 +115,12 @@ class App:
             self.inputareabox.delete(0,'end')
             self.inputareabox.unbind('<Return>')
             ttodisplay = sycreator.sycreate("True", str(syselect()), str(stselect()), tracertext)
-            displaytext.set(ttodisplay)
+            self.displaytext.set(ttodisplay)
             ttodisplay = ""
 
         def createsycmd(*args): 
             print("Creating School Year")
-            displaytext.set("Number of Students in" + " " + str(stselect() + "?:"))
+            self.displaytext.set("Number of Students in" + " " + str(stselect() + "?:"))
             self.inputareabox.bind('<Return>', createsysubcmd)              
 
 #       #Add Studs
@@ -115,11 +133,11 @@ class App:
             self.inputareabox.delete(0,'end')
             self.inputareabox.unbind('<Return>')
             ttodisplay = iactlister.listincacts(inputtedtype, str(syselect()), str(stselect()), str(qtselect()))
-            displaytext.set("Incomplete Activities are Act No.:" + "\n" + str(ttodisplay))
+            self.displaytext.set("Incomplete Activities are Act No.:" + "\n" + str(ttodisplay))
 
         def listincactscmd(*args): 
             print("Finding Incomplete Activities")
-            displaytext.set("Performance or Written?")
+            self.displaytext.set("Performance or Written?")
             self.inputareabox.bind('<Return>', listincactssubcmd)
 
 #       #Find Student's Missing Act
@@ -171,14 +189,13 @@ class App:
         exportbut = tk.Button(root, bg = "#383737", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Export", command = exportcmd)
         exportbut.place(x=610,y=330,width=124,height=30)
-
-#        #Diplay Box
-        displaybox = tk.Message(root, bg = "#8a8a8a", width = "10000", font= tkFont.Font(family = 'Times', size = 20),
-        fg = "#f4f4f4", justify = "left", textvariable = displaytext)
-        displaybox.place(x=20,y=60,width=707,height=129)
-#    
+#
+  
     def get_inputbox(self):
         return self.inputareabox
+    
+    def get_displaybox(self):
+        return self.displaytext
 
 def main():
     root = tk.Tk()
