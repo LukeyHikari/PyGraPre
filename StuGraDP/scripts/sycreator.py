@@ -8,15 +8,19 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
 import csvcreator as csvc
 
+x = 0
+y = 0
 def sycreate(crsy, sy, sec, numstud):
     creating = crsy #input(r'New school year:')
     rvalue = ""
     def centeractnumbers(quarter):
         wb = load_workbook(filedestination)
         ws = wb[quarter]
+        global x
+        global y
         x = 1
         y = 2
-        while x < 11:    
+        while x < 11:
             cell = ws.cell(row = 2, column = y)
             cell.value = x
             cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
@@ -30,6 +34,7 @@ def sycreate(crsy, sy, sec, numstud):
             cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
             x = x+1
             y = y+1
+        wb.save(filename = filedestination)
 
     def fillsheetq1():
         wb = load_workbook(filedestination)
@@ -47,8 +52,8 @@ def sycreate(crsy, sy, sec, numstud):
         cell = ws.cell(row = 2, column = 1)
         cell.value = "Student Names"
         cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
-        centeractnumbers(quarter)
         wb.save(filename = filedestination)
+        centeractnumbers(quarter)
 
     def fillsheetq2():
         wb = load_workbook(filedestination)
@@ -66,8 +71,8 @@ def sycreate(crsy, sy, sec, numstud):
         cell = ws.cell(row = 2, column = 1)
         cell.value = "Student Names"
         cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
-        centeractnumbers(quarter)
         wb.save(filename = filedestination)
+        centeractnumbers(quarter)
 
     def fillsheetq3():
         wb = load_workbook(filedestination)
@@ -85,8 +90,8 @@ def sycreate(crsy, sy, sec, numstud):
         cell = ws.cell(row = 2, column = 1)
         cell.value = "Student Names"
         cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
-        centeractnumbers(quarter)
         wb.save(filename = filedestination)
+        centeractnumbers(quarter)
 
     def fillsheetq4():
         wb = load_workbook(filedestination)
@@ -104,8 +109,8 @@ def sycreate(crsy, sy, sec, numstud):
         cell = ws.cell(row = 2, column = 1)
         cell.value = "Student Names"
         cell.alignment = Alignment(horizontal = 'center', vertical = 'center')
-        centeractnumbers(quarter)
         wb.save(filename = filedestination)
+        centeractnumbers(quarter)
 
     if creating == "True":
         school_year = sy #input(r'School year:')

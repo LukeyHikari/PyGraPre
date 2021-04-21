@@ -8,6 +8,7 @@ import sycreator
 import incompleteactivitylister as iactlister
 import studadd as sadd
 import performancetaskkadder as ptadder
+import writtentaskadder as wtadder
 import time
 root = None
 
@@ -102,8 +103,18 @@ class App:
             self.inputareabox.bind('<Return>', addptinitialcmd)
 
 #        #Add WT
+        def addwtinitialcmd(*args):
+            ttodisplay = "Recording Grades for Activity No. " + self.inputareabox.get()  
+            self.displaytext.set(ttodisplay)
+            anumber = int(self.inputareabox.get())
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            wtadder.wtaskadd(str(syselect()), str(stselect()), anumber, str(qtselect()))
+
         def addwtcmd(*args):
             print("Adding Written Task")
+            self.displaytext.set("Please Input Activity Number(Ex: 1, 2, etc.)")
+            self.inputareabox.bind('<Return>', addwtinitialcmd)
 
 #       #Find w/ Stud Mis Act
         def findstudwmisactcmd(*args): 
