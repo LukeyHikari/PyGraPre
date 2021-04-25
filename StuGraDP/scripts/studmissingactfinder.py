@@ -6,22 +6,15 @@ import os.path as op
 import os
 import csv
 
-def findstudsmisacts(sy, sec, qt, atype, anum):
+def findstudsmisacts(sy, sec, qt, atype, anum): #just use a return array here
     school_year = sy #input(r'School Year:')
     section = sec #input(r'Section:')
-    quarter = qt #input(r'Quarter:')
+    sheetname = qt #input(r'Quarter:')
     activitytype = atype #input(r'Activity Type:')
     activityno = anum #int(input(r'Activity Number:'))
-
-    if quarter == '1':
-            sheetname = "Quarter 1"
-    elif quarter == '2':
-        sheetname = "Quarter 2"
-    elif quarter == '3':
-        sheetname = "Quarter 3"
-    elif quarter == '4':
-        sheetname = "Quarter 4"
-
+    swmacts = []
+    returnvalue = None
+    
     directory = os.getcwd()
     directory = directory + r'\\Sheets\\'
     filetype = r".xlsx"
@@ -48,6 +41,8 @@ def findstudsmisacts(sy, sec, qt, atype, anum):
                         studentnamecell = sheet.cell(row = x + 3, column = 1).value
                         activitynumber = str(activityno)
                         print("This student is missing Performance Activity Number" + " " + activitynumber + ":", studentnamecell)
+                        swmacts.append(studentnamecell)
+                        returnvalue = swmacts
                     
         elif activitytype == 'Written':
                 for x in range(noStuds):
@@ -56,5 +51,10 @@ def findstudsmisacts(sy, sec, qt, atype, anum):
                         studentnamecell = sheet.cell(row = x + 3, column = 1).value
                         activitynumber = str(activityno)
                         print("This student is missing Performance Activity Number" + " " + activitynumber + ":", studentnamecell)
+                        swmacts.append(studentnamecell)
+                        returnvalue = swmacts
+                
     else:
         print("This SY or Section does not exist")
+
+    return(returnvalue)

@@ -9,7 +9,9 @@ import incompleteactivitylister as iactlister
 import studadd as sadd
 import performancetaskkadder as ptadder
 import writtentaskadder as wtadder
-import time
+import studmissingactfinder as studmaf
+import owmissingactivty as amacts
+
 root = None
 
 class App:
@@ -18,6 +20,7 @@ class App:
         directorydisplaytext = StringVar()
         tracertext = ""
         self.displaytext = StringVar()
+        self.atype = ""
 
 #       #Dropdowns
         quarters = ["Quarter 1","Quarter 2","Quarter 3","Quarter 4"]
@@ -116,9 +119,29 @@ class App:
             self.displaytext.set("Please Input Activity Number(Ex: 1, 2, etc.)")
             self.inputareabox.bind('<Return>', addwtinitialcmd)
 
-#       #Find w/ Stud Mis Act
+#       #Find Stud w/ Mis Act
+        def fsmafcmd(*args):
+            actnumber = int(self.inputareabox.get())
+            nsactnumber = str(self.inputareabox.get())
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            snames = studmaf.findstudsmisacts(str(syselect()), str(stselect()), str(qtselect()), self.atype, actnumber)
+            print(nsactnumber)
+            ttodisplay = "Students Missing " + self.atype + " Activity " + nsactnumber + "\n" + str(snames)
+            self.displaytext.set(ttodisplay)
+
+        def fsmainitialcmd(*args):
+            self.atype = self.inputareabox.get()
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            self.displaytext.set("Please Input Activity Number")
+            self.inputareabox.bind('<Return>',fsmafcmd)
+
         def findstudwmisactcmd(*args): 
             print("Finding Student With Missing Activities")
+            self.displaytext.set("Performance or Written?")
+            self.inputareabox.bind('<Return>', fsmainitialcmd)
+
 
 #       #Create S.Y.
         def createsysubcmd(*args):
@@ -151,9 +174,9 @@ class App:
             self.displaytext.set("Performance or Written?")
             self.inputareabox.bind('<Return>', listincactssubcmd)
 
-#       #Find Student's Missing Act
-        def findstudmisactcmd(*args): 
-            print("Finding Student Missing Activities")
+#       #Add Missing Activity
+        def addmisactcmd(*args): 
+            print("Adding a Student's Missed Activity")
 
 #       #Experimental export command
         def exportcmd(*args): 
@@ -181,19 +204,19 @@ class App:
         justify = "center", text = "Add Students", command = addstudscmd)
         addstudbut.place(x=220,y=250,width=190,height=30)
 
-#        #Find Student's Missing Acts. Button
+#        #List Incomplete Activities(List Whichh Activities have not been finished)
         fstudsmisactbut = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
-        justify = "center", text = "Find Student's Missing Act.", command = findstudmisactcmd)
+        justify = "center", text = "List Incomplete Activities", command = listincactscmd)
         fstudsmisactbut.place(x=20,y=290,width=185,height=30)
 
-#        #Find Students with Missing Acts. Button
+#        #Find Students with Missing Acts. Button(Find students who are missing specified activity)
         recmisactbut = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
         justify = "center", text = "Find Students w/ Missing Acts.", command = findstudwmisactcmd)
         recmisactbut.place(x=220,y=290,width=190,height=30)
 
-#        #List Incomplete Activities Button
+#        #Add Missing Activity(Add the missing activity)
         findstudwithmisact = tk.Button(root, bg = "#4f4d4d", font= tkFont.Font(family = 'Times', size = 10), fg = "#ffffff",
-        justify = "center", text = "List Incomplete Activities", command = listincactscmd)
+        justify = "center", text = "Add Missing Activities", command = addmisactcmd)
         findstudwithmisact.place(x=120,y=330,width=189,height=30)
 
 #        #Export Button
