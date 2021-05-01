@@ -21,6 +21,9 @@ class App:
         tracertext = ""
         self.displaytext = StringVar()
         self.atype = ""
+        self.inputtedactno = None
+        self.inputtedstudname = ""
+        self.inputtedstudgrade = None
 
 #       #Dropdowns
         quarters = ["Quarter 1","Quarter 2","Quarter 3","Quarter 4"]
@@ -142,7 +145,6 @@ class App:
             self.displaytext.set("Performance or Written?")
             self.inputareabox.bind('<Return>', fsmainitialcmd)
 
-
 #       #Create S.Y.
         def createsysubcmd(*args):
             tracertext = str(self.inputareabox.get())
@@ -175,8 +177,39 @@ class App:
             self.inputareabox.bind('<Return>', listincactssubcmd)
 
 #       #Add Missing Activity
+        def addmisactfinalcmd(*args): #finished the UI command just edit the script
+            self.inputtedstudgrade = self.inputareabox.get()
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            ttodisplay = "Added " + self.inputtedstudgrade + "to " + self.atype + " " + self.inputtedactno + "for" + "\n" + self.inputtedstudname
+            self.displaytext.set(ttodisplay)
+            amacts.grademisact(str(syselect), str(stselect), str(qtselect), self.atype, int(self.inputtedactno), self.inputtedstudname, int(self.inputtedstudgrade))
+
+        def addmisactthirdcmd(*args):
+            self.displaytext.set("Student Grade?")
+            self.inputtedstudname = self.inputareabox.get()
+            self.inputareabox.delete(0, 'end')
+            self.inputareabox.unbind('<Return>')
+            self.inputareabox.bind('<Return>', addmisactfinalcmd)
+
+        def addmisactsecondcmd(*args):
+            self.displaytext.set("Student Name?")
+            self.inputtedactno = self.inputareabox.get()
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            self.inputarebox.bind('<Return>', addmisactthirdcmd)
+
+        def addmisactfirstcmd(*args):
+            self.displaytext.set("Activity Number?")
+            self.atype = self.inputareabox.get()
+            self.inputareabox.delete(0,'end')
+            self.inputareabox.unbind('<Return>')
+            self.inputareabox.bind('<Return>', addmisactsecondcmd)
+
         def addmisactcmd(*args): 
             print("Adding a Student's Missed Activity")
+            self.displaytext.set("Performance or Written?")
+            self.inputareabox.bind('<Return>', addmisactfirstcmd)
 
 #       #Experimental export command
         def exportcmd(*args): 
@@ -231,11 +264,10 @@ class App:
     def get_displaybox(self):
         return self.displaytext
 
-def main():
+
+if __name__ == "__main__":
     root = tk.Tk()
-# Window Properties
     root.title("PyGraPre")
-    #setting window size
     width=750
     height=381
     screenwidth = root.winfo_screenwidth()
@@ -244,10 +276,7 @@ def main():
     root.geometry(alignstr)
     root.resizable(width=False, height=False)
     root.configure(bg = '#383737')
-#    
-    app = App()
+    App()
     root.mainloop()
 
-if __name__ == "__main__":
-    main()
     

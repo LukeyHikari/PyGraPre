@@ -11,10 +11,16 @@ import UI
 from tkinter import Entry
 from tkinter import ttk
 
-i = 0
-highestpossiblegrade = 0
-studentgrade = 0
+i = None
+highestpossiblegrade = None
+studentgrade = None
 def wtaskadd(sy, sec, actno, qt):
+    global i
+    global highestpossiblegrade
+    global studentgrade
+    studentgrade=0
+    highestpossiblegrade=0
+    i=0
     school_year = sy #input(r'School Year:')
     section = sec #input(r'Section:')
     activityno = actno #int(input(r'Activity Number:'))
@@ -47,7 +53,7 @@ def wtaskadd(sy, sec, actno, qt):
         global studentgrade
         studentgrade = int(ib.get())
         if i < noStuds:
-            if studentgrade < highestpossiblegrade:
+            if studentgrade <= highestpossiblegrade:
                 if i != noStuds-1:
                     wb = Workbook()
                     wb = load_workbook(filedestination)

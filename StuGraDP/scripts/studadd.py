@@ -9,11 +9,16 @@ import UI
 from UI import App
 from tkinter import ttk
 from tkinter import Entry
+import tkinter as tk
 
-i = 0
-studentname = ""
+i = None
+studentname = None
 
-def addstuds(sy, sec):
+def addstuds(sy, sec):#bug fixing in process
+    global i
+    global studentname
+    i = 0
+    studentname = ""
     #Directory Variables
     school_year = sy
     section = sec
@@ -94,6 +99,7 @@ def addstuds(sy, sec):
 
     if file_exists:
         print("Adding Students")
+        print(i)
         ib.bind('<Return>', adder)
         dp.set("Please type the students' names then press enter")
         wb = load_workbook(filedestination)
