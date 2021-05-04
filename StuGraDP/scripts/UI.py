@@ -181,9 +181,9 @@ class App:
             self.inputtedstudgrade = self.inputareabox.get()
             self.inputareabox.delete(0,'end')
             self.inputareabox.unbind('<Return>')
-            ttodisplay = "Added " + self.inputtedstudgrade + "to " + self.atype + " " + self.inputtedactno + "for" + "\n" + self.inputtedstudname
-            self.displaytext.set(ttodisplay)
-            amacts.grademisact(str(syselect), str(stselect), str(qtselect), self.atype, int(self.inputtedactno), self.inputtedstudname, int(self.inputtedstudgrade))
+            #ttodisplay = "Added " + self.inputtedstudgrade + "to " + self.atype + " " + self.inputtedactno + "for" + "\n" + self.inputtedstudname
+            #self.displaytext.set(ttodisplay)
+            amacts.grademisact(str(syselect()), str(stselect()), str(qtselect()), self.atype, int(self.inputtedactno), self.inputtedstudname, int(self.inputtedstudgrade))
 
         def addmisactthirdcmd(*args):
             self.displaytext.set("Student Grade?")
@@ -197,7 +197,7 @@ class App:
             self.inputtedactno = self.inputareabox.get()
             self.inputareabox.delete(0,'end')
             self.inputareabox.unbind('<Return>')
-            self.inputarebox.bind('<Return>', addmisactthirdcmd)
+            self.inputareabox.bind('<Return>', addmisactthirdcmd)
 
         def addmisactfirstcmd(*args):
             self.displaytext.set("Activity Number?")
