@@ -211,10 +211,11 @@ class App:
             self.displaytext.set("Performance or Written?")
             self.inputareabox.bind('<Return>', addmisactfirstcmd)
 
-#       #Experimental export command
+#       #Export command
         def exportcmd(*args): 
             print("Exporting")
-            exgrades.exportgrades(dpsy, dpst, dpqt)
+            exgrades.exportgrades(str(syselect()), str(stselect()), str(qtselect()))
+            self.displaytext.set("Quarterly Grades Exported in Quarterly Grades Folder")
 
 # Main UI code
 #        #Add Performance Task Button

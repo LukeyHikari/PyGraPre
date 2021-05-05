@@ -6,25 +6,24 @@ import os.path as op
 import os
 import csv
 
-def exportgrades(sy, sec, qt):
+def exportgrades(sy, sec, qt): #Finish this up by creating a notepad file in a folder
     school_year = sy #input(r'School Year:')
     section = sec #input(r'Section:')
     quarter = qt #(r'Quarter:')
+    sheetname = qt
 
-    if quarter == '1':
-        sheetname = "Quarter 1"
-    elif quarter == '2':
-        sheetname = "Quarter 2"
-    elif quarter == '3':
-        sheetname = "Quarter 3"
-    elif quarter == '4':
-        sheetname = "Quarter 4"
-
-
-    directory = os.getcwd()
-    directory = directory + r'\\Sheets\\'
+    directoryraw = os.getcwd()
+    directory = directoryraw + r'\\Sheets\\'
     filetype = r".xlsx"
     sydirectory = directory + school_year + r'\\' + section + r'\\'
+    exportfolder = directoryraw + r'\\Quarterly Grades\\'
+    exfolder_exists = op.exists(exportfolder)
+
+    if exfolder_exists:
+        print("Export Folder Exists")
+    else:
+        print("Creating Export Folder")
+        os.makedirs(exportfolder)
 
     with open(sydirectory + 'Number of Students and Activities.csv', 'rt') as f:
         data = csv.DictReader(f)
@@ -91,6 +90,7 @@ def exportgrades(sy, sec, qt):
         weightedwtavg = weightedwtavg * .50
         rawgrade = (weightedptavg*1000) + (weightedwtavg*1000)
 
+    #Transmutation
         finalgrade = 0
         if rawgrade == 100:
             finalgrade = 100
@@ -177,12 +177,19 @@ def exportgrades(sy, sec, qt):
         else:
             print("Raw grade does not exist in transmutation database")
         return finalgrade
+    #
 
     if file_exists:
         x = 1
+        textfilename = exportfolder+section+"_"+quarter+"_"+school_year+".txt"
         while x < noStuds:
+            qtgradetextfile = open(textfilename,"a+")
             student = sheet.cell(row = x+2, column = 1).value
-            print("Student:",student, "|", "Quarterly Grade:",getgrades())
+            studandgrade = "Student: " + student + " | " + " Quarterly Grade: " + str(getgrades())
+            qtgradetextfile.write(str(studandgrade))
+            qtgradetextfile.write("\n")
+            print(studandgrade)
+            qtgradetextfile.close()
             x = x + 1
 
     else:
