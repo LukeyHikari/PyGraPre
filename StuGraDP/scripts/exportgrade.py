@@ -5,6 +5,7 @@ from openpyxl import load_workbook
 import os.path as op 
 import os
 import csv
+import datapreprocess as dpp
 
 def exportgrades(sy, sec, qt): #Finish this up by creating a notepad file in a folder
     school_year = sy #input(r'School Year:')
@@ -12,12 +13,16 @@ def exportgrades(sy, sec, qt): #Finish this up by creating a notepad file in a f
     quarter = qt #(r'Quarter:')
     sheetname = qt
 
+    gradearray = []
+    studentarray = []
+
     directoryraw = os.getcwd()
     directory = directoryraw + r'\\Sheets\\'
     filetype = r".xlsx"
     sydirectory = directory + school_year + r'\\' + section + r'\\'
     exportfolder = directoryraw + r'\\Quarterly Grades\\'
     exfolder_exists = op.exists(exportfolder)
+    
 
     if exfolder_exists:
         print("Export Folder Exists")
@@ -42,7 +47,7 @@ def exportgrades(sy, sec, qt): #Finish this up by creating a notepad file in a f
             for row in data:
                 noWT = row['No. of WT']
                 noWT = int(noWT)
-
+    
     filedestination = sydirectory + section + filetype
 
     file_exists = op.isfile(filedestination)
@@ -181,16 +186,28 @@ def exportgrades(sy, sec, qt): #Finish this up by creating a notepad file in a f
 
     if file_exists:
         x = 1
-        textfilename = exportfolder+section+"_"+quarter+"_"+school_year+".txt"
+        textfilename = exportfolder+section+"_"+quarter+"_"+school_year
         while x < noStuds:
-            qtgradetextfile = open(textfilename,"a+")
+            qtgradetextfile = open(textfilename+".txt","a+")
             student = sheet.cell(row = x+2, column = 1).value
             studandgrade = "Student: " + student + " | " + " Quarterly Grade: " + str(getgrades())
+            studentarray.append(student)
+            gradearray.append(str(getgrades()))
             qtgradetextfile.write(str(studandgrade))
             qtgradetextfile.write("\n")
             print(studandgrade)
             qtgradetextfile.close()
             x = x + 1
 
+        with open(textfilename+".csv", 'w', newline='') as file:
+            fieldnames = ['Student_Names', 'Quarterly_Grades']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            for x in range(noStuds-1):
+                student = studentarray[x]
+                grade = gradearray[x]
+                writer.writerow({'Student_Names': student, 'Quarterly_Grades':grade})
     else:
       print("This directory does not exist")
+    
+    dpp.preprocess(school_year, section, quarter)

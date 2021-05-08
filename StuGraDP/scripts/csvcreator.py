@@ -13,10 +13,9 @@ def qcsvcreate(sy, sec, numstud):
     file_exists = op.exists(directory)
 
     if file_exists:
-        print("This directory already exists")
-        print("Proceeding to CSVs")
+        print("Section exists. Creating CSVs")
     else:
-        os.makedirs(directory)
+        print("Section does not exist")
 
     sydirectory = directory + r'\\'
 

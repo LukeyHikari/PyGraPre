@@ -4,53 +4,49 @@ import openpyxl
 import csv
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import LabelEncoder
+from sklearn.compose import ColumnTransformer
 
-def preprocessqtdata(sy, sec, qt):
-    school_year = sy #input(r'School Year:')
-    section = sec #input(r'Section:')
-    quarter = qt #(r'Quarter:')
+def preprocess(sy,st,qt):
+    school_year = sy #"2020-2021"
+    section = st #"Agoncillo"
+    quarter = qt #"Quarter 1"
+    sheetname = quarter
 
-    if quarter == '1':
-        sheetname = "Quarter 1"
-    elif quarter == '2':
-        sheetname = "Quarter 2"
-    elif quarter == '3':
-        sheetname = "Quarter 3"
-    elif quarter == '4':
-        sheetname = "Quarter 4"
+    ErrorCodes = []
 
-    directory = os.getcwd()
-    directory = directory + r'\\Sheets\\'
-    filetype = r".xlsx"
+    directoryraw = os.getcwd()
+    directory = directoryraw + r'\\Sheets\\'
+    filetype = r'.xlsx'
     sydirectory = directory + school_year + r'\\' + section + r'\\'
+    exportfolder = directoryraw + r'\\Quarterly Grades\\'
     sheetdirectory = sydirectory + section + filetype
 
-    df = pd.read_excel(sheetdirectory, sheet_name = sheetname, engine ='openpyxl', header=1).reset_index() 
-    df = df.fillna(0)
-    df.to_csv(sydirectory + r'Dataframe.csv', index=False)
+    exgradescsvdir = exportfolder+section+"_"+quarter+"_"+school_year+".csv"
 
-def logstudmisacts(sy, sec, qt):
-    school_year = sy #input(r'School Year:')
-    section = sec #input(r'Section:')
-    quarter = qt #(r'Quarter:')
+    preprocesseddatadir = sydirectory + r'PreprocessedData\\'
+    ppdatadir = op.exists(preprocesseddatadir)
 
-    directory = os.getcwd()
-    directory = directory + r'\\Sheets\\'
-    filetype = r".xlsx"
-    sydirectory = directory + school_year + r'\\' + section + r'\\'
-    sheetdirectory = sydirectory + section + filetype
+    if ppdatadir:
+        print("PreProcessed Data Directory Already Exists")
+    else:
+        os.makedirs(preprocesseddatadir)
 
-    if quarter == '1':
-        sheetname = "Quarter 1"
-    elif quarter == '2':
-        sheetname = "Quarter 2"
-    elif quarter == '3':
-        sheetname = "Quarter 3"
-    elif quarter == '4':
-        sheetname = "Quarter 4"
+    nadataframe = None
+    stqtdata = None
+    stqtdata = pd.read_csv(exgradescsvdir,header=0)
+    stqtdata.reset_index(drop=True,inplace=True)
+    stqtdata.fillna(0)
 
-    df = pd.read_excel(sheetdirectory, sheet_name = sheetname, engine ='openpyxl', header=1,).reset_index() 
-    df = df.isnull()
-    df = df.any(axis=1)
-    print(df)
-    df.to_csv(sydirectory + r'Final Missing Student Activity Log.csv', index=False)
+    labelencoder = LabelEncoder()
+    stqtdata['Student_Names_Cat'] = labelencoder.fit_transform(stqtdata['Student_Names'])
+    stqtdata
+
+    enc = OneHotEncoder(handle_unknown='ignore')
+    enc_df = pd.DataFrame(enc.fit_transform(stqtdata[['Student_Names']]).toarray())
+    stqtdata = stqtdata.join(enc_df)
+    stqtdata
+
+    finalcsvdir = preprocesseddatadir + r'Preprocessed Grades of ' + quarter + r'.csv'
+    stqtdata.to_csv(finalcsvdir, index=False)
